@@ -10,7 +10,7 @@ import axios from "axios";
 
 function App() {
 
-  const [balance , setBalance] = useState(CONSTANTS.STARTING_BALANCE)
+  const [balance , setBalance] = useState(0)
 
   const updateBalance = function(amount){
     setBalance(balance + amount)

@@ -1,5 +1,4 @@
 {
-    "STARTING_BALANCE": 1000,
     "POSITIVE_BALANCE": 500,
     "GET_BALANCE": "http://localhost:4000/balance",
     "GET_TRANSACTIONS": "http://localhost:4000/transactions",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import axios from "axios";
 import CONSTANTS from "../../Constants.json";
 import "./Operations.css";
@@ -36,8 +36,8 @@ export default function Operations({updateBalance}) {
       <input className="newTransaction-input" name={"vendor"} placeholder="vendor" onChange={updateNewDeposit} value={newDeposit.vendor} />
       <input className="newTransaction-input" name={"category"} placeholder="category" onChange={updateNewDeposit} value={newDeposit.category} />
       <Link to="/">
-        <button onClick={()=> onDepositClick()}> Deposit </button>
-        <button onClick={() => onWithdrawClick()}> Withdraw </button>
+        <button onClick={onDepositClick}> Deposit </button>
+        <button onClick={onWithdrawClick}> Withdraw </button>
       </Link>
     </div>
   );
