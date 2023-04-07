@@ -12,3 +12,11 @@
     width: 80%;
     height: 80%;
 }
+
+.deposit{
+    color: green;
+}
+
+.withdraw{
+    color: red;
+}

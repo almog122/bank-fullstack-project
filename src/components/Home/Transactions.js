@@ -1,30 +1,54 @@
-import React, { useState } from 'react';
-import { Users , Movies} from "../../Data";
-import { Constants} from "../../Constants";
-import User from './Transaction';
-import './Home.css'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./Transactions.css";
+import Transaction from "./Transaction";
+import CONSTANTS from "../../Constants.json";
 
-export default function Home({setUsername}){
+export default function Transactions({updateBalance}) {
+  const [transactions, setTransactions] = useState([]);
+  const [deletedTransactionId, setDeletedTransactionId] = useState(0);
 
-  const [usersData, setUsersData] = useState({ users: Users});
-
-  const loginUser = function(userID){
-    let user = usersData.users.find( user => user.id === userID);
-    setUsersData({...usersData})
-    
-    if(localStorage[user.name] === undefined){
-      localStorage.setItem(user.name, JSON.stringify({
-        movies : Movies ,
-        budget : Constants.STARTING_BUDGET
-      }))
-    }
-
-    setUsername(user.name)
+  async function getTransactions() {
+    return axios
+      .get(CONSTANTS.GET_TRANSACTIONS)
+      .then(function (transactions) {
+        return transactions.data;
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
   }
+
+  useEffect(() => {
+    const getTransactionsData = async function () {
+      let transactionsData = await getTransactions();
+      setTransactions(transactionsData);
+    };
+    getTransactionsData();
+  }, [deletedTransactionId]);
+
+  const deleteTransaction = function (id , amount) {
+    axios
+      .delete(`${CONSTANTS.DELETE_TRANSACTION}/${id}`)
+      .then((respond) => {
+        updateBalance(-amount)
+        console.log(respond.data.message);
+        setDeletedTransactionId(id);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  };
 
   return (
     <div className="home">
-      {usersData.users.map(user=> <User user={user} loginUser={loginUser} key={user.id}/>)}
+      {transactions.map((transaction) => (
+        <Transaction
+          key={transaction._id}
+          transaction={transaction}
+          deleteTransaction={deleteTransaction}
+        />
+      ))}
     </div>
   );
-} 
+}

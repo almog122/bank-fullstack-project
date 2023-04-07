@@ -11,18 +11,31 @@
   text-transform: uppercase;
   font-weight: 500;
   display: inline-block;
-  width: 80px;
+  width: 200px;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
-  left: 20%;
+  left: 20px;
+  
 }
 
-.navBar div:hover {
+.navBar .link:hover {
   color: #fddb3a;
 }
 
 .navBar .logo{
   position: relative;
   color: red;
-  left: 70%;
+  left: 40%;
+}
+
+.balance{
+  
+}
+
+.balance.positive{
+  color: green;
+}
+
+.balance.negative{
+  color: red;
 }

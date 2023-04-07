@@ -9,34 +9,47 @@ router.get("/transactions", function (req, res) {
     .then(function (transactions) {
       res.send(transactions);
     })
-    .catch(function (err) {
+    .catch(function (error) {
       res.status(500).send({ message: "Internal Server Error" });
     });
 });
 
-router.get("/transactionsSum/:category", function (req, res) {
-  let category = req.params.category;
-
+router.get("/transactionsCategorySum", function (req, res) {  
   Transaction.aggregate([
-    { $match: { category: category } },
     {
       $group: {
-        _id: `total sum in ${category}`,
-        total: { $sum: "$amount" },
+        _id: "$category",
+        totalAmount: { $sum: "$amount" },
       },
     },
   ])
     .then(function (transactionsSum) {
       res.send(transactionsSum);
     })
-    .catch(function (err) {
+    .catch(function (error) {
       res.status(500).send({ message: "Internal Server Error" });
     });
 });
 
-router.post("/transactions", function (req, res) {
-  let transactionData = req.body;
+router.get("/balance", function (req, res) {
+  Transaction.aggregate([
+    {
+      $group: {
+        _id: null,
+        balance: { $sum: "$amount" },
+      },
+    },
+  ])
+    .then(function (balance) {
+      res.send(balance[0]);
+    })
+    .catch(function (error) {
+      res.status(500).send({ message: "Internal Server Error" });
+    });
+});
 
+router.post("/transaction", function (req, res) {
+  let transactionData = req.body;
   let transactionSchema = transactionsUtil.getTransactionsSchema(transactionData);
 
   transactionSchema
@@ -49,7 +62,7 @@ router.post("/transactions", function (req, res) {
     });
 });
 
-router.delete("/transactions/:id", function (req, res) {
+router.delete("/transaction/:id", function (req, res) {
   let id = req.params.id;
 
   Transaction.deleteOne({ _id: id })
@@ -60,7 +73,7 @@ router.delete("/transactions/:id", function (req, res) {
         res.status(400).send({ message: `Couldn't delete from DB` });
       }
     })
-    .catch(function (err) {
+    .catch(function (error) {
       res.status(500).send({ message: "Internal Server Error" });
     });
 });

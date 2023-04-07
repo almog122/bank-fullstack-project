@@ -1,14 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import './User.css'
+import './Transaction.css'
 
-export default function User({user , loginUser}) {
+export default function Transaction({transaction , deleteTransaction}) {
+
+  const transactionColor = function (amount) {
+    return amount > 0 ? 'deposit' : 'withdraw' 
+  }
+
   return (
-    <Link to={`/catalog/${user.name}`}>
-        <div className='user' onClick={() => loginUser(user.id)}>
-            <img src={user.imageUrl} alt={""} className='profilePic'></img>
-            <div className='name'>{user.name}</div>
-        </div>
-    </Link>
+    <div className={transactionColor(transaction.amount)}>
+      <div>vendor : {transaction.vendor}</div>
+      <div>category : {transaction.category}</div>
+      <div>amount : {transaction.amount}</div>
+      <button onClick={() => deleteTransaction(transaction._id , transaction.amount)}>Delete</button>
+    </div>
   )
 }

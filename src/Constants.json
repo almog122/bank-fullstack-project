@@ -1,0 +1,9 @@
+{
+    "STARTING_BALANCE": 1000,
+    "POSITIVE_BALANCE": 500,
+    "GET_BALANCE": "http://localhost:4000/balance",
+    "GET_TRANSACTIONS": "http://localhost:4000/transactions",
+    "DELETE_TRANSACTION": "http://localhost:4000/transaction",
+    "POST_TRANSACTION": "http://localhost:4000/transaction",
+    "GET_CATEGORY_SUM": "http://localhost:4000/transactionsCategorySum"
+}
