@@ -24,17 +24,22 @@ export default function Operations({balance ,updateBalance , setMessageData}) {
   }
 
   const onDepositClick = function () {
-    createTransaction(newDeposit);
-  };
-
-  const onWithdrawClick = async function () {
-    if(balance - newDeposit.amount < 500){
-      setMessageData({message : "Insufficient funds" , severity: 'error'})
-    } 
     if(newDeposit.amount === 0 || newDeposit.vendor === "" || newDeposit.category === "" ){
       setMessageData({message : "Cannot take action unless you fill all the inputs" , severity: 'error'})
+    }else{
+      createTransaction(newDeposit);
     }
+  };
 
+  const onWithdrawClick = function () {
+    if(balance - newDeposit.amount < 500){
+      setMessageData({message : "Insufficient funds" , severity: 'error'})
+      return
+    }
+    if(newDeposit.amount === 0 || newDeposit.vendor === "" || newDeposit.category === "" ){
+      setMessageData({message : "Cannot take action unless you fill all the inputs" , severity: 'error'})
+      return
+    }
     createTransaction({ ...newDeposit, "amount": -Number(newDeposit.amount)});
   };
   
