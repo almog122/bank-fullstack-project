@@ -8,7 +8,7 @@ export default function Transaction({transaction , deleteTransaction}) {
   }
 
   return (
-    <Grid container boxShadow={2} color={transactionColor(transaction.amount)} spacing={2} justifyContent="center" alignItems="center" width={"400px"}>
+    <Grid container boxShadow={2} spacing={2} justifyContent="center" alignItems="center" width={"400px"}>
 
       <Grid item xs={6}>
         <Typography > vendor : {transaction.vendor}</Typography>
@@ -16,7 +16,7 @@ export default function Transaction({transaction , deleteTransaction}) {
       </Grid>
 
       <Grid item xs={6}>
-        <Typography  > amount : {transaction.amount}</Typography>
+        <Typography color={transactionColor(transaction.amount)} > amount : {transaction.amount}</Typography>
         <Button variant="contained" color="error" onClick={() => deleteTransaction(transaction._id , transaction.amount)}> Delete </Button>
       </Grid>
     </Grid>
