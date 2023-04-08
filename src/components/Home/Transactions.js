@@ -4,7 +4,7 @@ import Transaction from "./Transaction";
 import CONSTANTS from "../../Constants.json";
 import {Divider, Stack } from "@mui/material";
 
-export default function Transactions({updateBalance}) {
+export default function Transactions({updateBalance , setMessageData}) {
   const [transactions, setTransactions] = useState([]);
   const [deletedTransactionId, setDeletedTransactionId] = useState(0);
 
@@ -32,11 +32,11 @@ export default function Transactions({updateBalance}) {
       .delete(`${CONSTANTS.DELETE_TRANSACTION}/${id}`)
       .then((respond) => {
         updateBalance(-amount)
-        console.log(respond.data.message);
+        setMessageData({message: respond.data.message , severity: 'success'});
         setDeletedTransactionId(id);
       })
-      .catch(function (error) {
-        console.log(error.message);
+      .catch(function (respond) {
+        setMessageData({message: respond.message , severity: 'success'});
       });
   };
 
