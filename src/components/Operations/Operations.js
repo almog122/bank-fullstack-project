@@ -39,7 +39,7 @@ export default function Operations({balance ,updateBalance , setMessageData}) {
   };
   
   return (
-    <Stack  direction="column" justifyContent="center" alignItems="center" spacing={2} className="Operations">
+    <Stack margin={10} direction="column" justifyContent="center" alignItems="center" spacing={2} className="Operations">
       <Input type="number" className="newTransaction-input" name={"amount"} placeholder="amount" onChange={updateNewDeposit} value={Math.abs(newDeposit.amount)} />
       <Input className="newTransaction-input" name={"vendor"} placeholder="vendor" onChange={updateNewDeposit} value={newDeposit.vendor} />
       <Input className="newTransaction-input" name={"category"} placeholder="category" onChange={updateNewDeposit} value={newDeposit.category} />
