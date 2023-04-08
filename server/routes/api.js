@@ -55,10 +55,10 @@ router.post("/transaction", function (req, res) {
   transactionSchema
     .save()
     .then((savedTransaction) => {
-      res.status(201).send(savedTransaction);
+      res.status(201).send({ message: `Successful transaction` });
     })
     .catch((error) => {
-      res.status(400).send({ message: `Couldn't save ${transactionSchema.name}` });
+      res.status(400).send({ message: `Failed transaction` });
     });
 });
 

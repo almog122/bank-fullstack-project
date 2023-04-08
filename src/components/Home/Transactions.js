@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./Transactions.css";
 import Transaction from "./Transaction";
 import CONSTANTS from "../../Constants.json";
+import {Divider, Stack } from "@mui/material";
 
 export default function Transactions({updateBalance}) {
   const [transactions, setTransactions] = useState([]);
@@ -41,7 +41,7 @@ export default function Transactions({updateBalance}) {
   };
 
   return (
-    <div className="home">
+    <Stack marginTop={"30px"} direction="column" justifyContent="center" alignItems="center" spacing={2} divider={<Divider orientation="vertical" flexItem />}>
       {transactions.map((transaction) => (
         <Transaction
           key={transaction._id}
@@ -49,6 +49,6 @@ export default function Transactions({updateBalance}) {
           deleteTransaction={deleteTransaction}
         />
       ))}
-    </div>
+    </Stack >
   );
 }

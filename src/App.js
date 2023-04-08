@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import './App.css';
 import Navbar from './components/Header/Navbar';
 import Transactions from './components/Home/Transactions';
 import Operations from './components/Operations/Operations'
@@ -43,7 +42,7 @@ function App() {
       </>
       <Routes>
         <Route path="/" element={<Transactions updateBalance={updateBalance}/>} />
-        <Route path="/operations" element={<Operations updateBalance={updateBalance}/>} />
+        <Route path="/operations" element={<Operations balance={balance} updateBalance={updateBalance}/>} />
         <Route path="/breakdown" element={<Breakdown/>} />
       </Routes>
     </Router>

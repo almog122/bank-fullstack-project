@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CONSTANTS from "../../Constants.json";
 import axios from 'axios';
 import CategorySum from './CategorySum';
+import { Box, Stack, Typography } from '@mui/material';
 
 export default function Breakdown() {
   const [transactionsCategoriesSum, setTransactionsCategoriesSum] = useState([]);
@@ -26,10 +27,13 @@ export default function Breakdown() {
   }, []);
 
   return (
-    <div className='breakdown'>
-      <h1>Breakdown</h1>
-      {transactionsCategoriesSum.map(Category => <CategorySum key={Category._id} Category={Category}/>)}
+    <Box boxShadow={2} margin={"10%"} width={'60%'} >
 
-    </div>
+      <Typography variant="h3" color={'lightgreen'}>Breakdown : </Typography>
+
+      <Stack direction="column" justifyContent="center" spacing={2}>
+        {transactionsCategoriesSum.map(Category => <CategorySum key={Category._id} Category={Category}/>)}
+      </Stack>
+    </Box>
   )
 }

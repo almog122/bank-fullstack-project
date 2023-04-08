@@ -1,44 +1,49 @@
 import React, {useState } from "react";
 import axios from "axios";
 import CONSTANTS from "../../Constants.json";
-import "./Operations.css";
-import { Link } from "react-router-dom";
+import { Input, Stack } from "@mui/material";
+import SnackbarAlerts from "./SnackbarAlerts"
 
-export default function Operations({updateBalance}) {
-  const [newDeposit, setNewDeposit] = useState({amount: 0, vendor: "", category: "",});
+export default function Operations({balance ,updateBalance}) {
+  const [newDeposit, setNewDeposit] = useState({amount: 0, vendor: "", category: ""});
 
   const updateNewDeposit = function (event) {
     setNewDeposit({ ...newDeposit, [event.target.name]: event.target.value });
   };
 
-  function createTransaction(newTransaction) {
-    axios
+  async function createTransaction(newTransaction) {
+    return axios
       .post(CONSTANTS.POST_TRANSACTION , newTransaction )
-      .catch(function (error) {
-        console.log(error.message);
+      .then((respond)=>{
+        updateBalance(Number(newTransaction.amount));
+        return {message : respond.data.message , severity: 'success'}
+      })
+      .catch((respond) => {
+        return {message : respond.message , severity: 'error'}
       });
   }
 
   const onDepositClick = function () {
-    updateBalance(Number(newDeposit.amount));
-    createTransaction(newDeposit);
+    return createTransaction(newDeposit);
   };
 
-  const onWithdrawClick = function () {
-    let newAmount = -Number(newDeposit.amount);
-    updateBalance(newAmount);
-    createTransaction({ ...newDeposit, "amount": newAmount});
+  const onWithdrawClick = async function () {
+    if(balance - newDeposit.amount < 500){
+      return {message : "Insufficient funds" , severity: 'error'}
+    } 
+    if(newDeposit.amount === 0 || newDeposit.vendor === "" || newDeposit.category === "" ){
+      return {message : "Cannot take action unless you fill all the inputs" , severity: 'error'}
+    }
+
+    return createTransaction({ ...newDeposit, "amount": -Number(newDeposit.amount)});
   };
   
   return (
-    <div className="Operations">
-      <input type="number" className="newTransaction-input" name={"amount"} placeholder="amount" onChange={updateNewDeposit} value={Math.abs(newDeposit.amount)} />
-      <input className="newTransaction-input" name={"vendor"} placeholder="vendor" onChange={updateNewDeposit} value={newDeposit.vendor} />
-      <input className="newTransaction-input" name={"category"} placeholder="category" onChange={updateNewDeposit} value={newDeposit.category} />
-      <Link to="/">
-        <button onClick={onDepositClick}> Deposit </button>
-        <button onClick={onWithdrawClick}> Withdraw </button>
-      </Link>
-    </div>
+    <Stack  direction="column" justifyContent="center" alignItems="center" spacing={2} className="Operations">
+      <Input type="number" className="newTransaction-input" name={"amount"} placeholder="amount" onChange={updateNewDeposit} value={Math.abs(newDeposit.amount)} />
+      <Input className="newTransaction-input" name={"vendor"} placeholder="vendor" onChange={updateNewDeposit} value={newDeposit.vendor} />
+      <Input className="newTransaction-input" name={"category"} placeholder="category" onChange={updateNewDeposit} value={newDeposit.category} />
+      <SnackbarAlerts onDepositClick={onDepositClick} onWithdrawClick={onWithdrawClick}></SnackbarAlerts>
+    </Stack>
   );
 }
