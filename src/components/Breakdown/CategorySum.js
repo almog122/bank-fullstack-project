@@ -1,11 +1,11 @@
 import { Box, Typography } from '@mui/material'
 import React from 'react'
 
-export default function CategorySum({Category}) {
+export default function CategorySum({CategoryData}) {
 
   return (
     <Box boxShadow={2} >
-        <Typography color={'blue'}>{Category._id}: {Category.totalAmount}</Typography>
+        <Typography color={'blue'}>{CategoryData.category}: {CategoryData.totalAmount}</Typography>
     </Box>
   )
 }

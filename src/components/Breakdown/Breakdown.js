@@ -32,7 +32,7 @@ export default function Breakdown() {
       <Typography variant="h3" color={'lightgreen'}>Breakdown : </Typography>
 
       <Stack direction="column" justifyContent="center" spacing={2}>
-        {transactionsCategoriesSum.map(Category => <CategorySum key={Category._id} Category={Category}/>)}
+        {transactionsCategoriesSum.map(CategoryData => <CategorySum key={CategoryData.category} CategoryData={CategoryData}/>)}
       </Stack>
     </Box>
   )

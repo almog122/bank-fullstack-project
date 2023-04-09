@@ -24,7 +24,7 @@ router.get("/transactionsCategorySum", function (req, res) {
     },
   ])
     .then(function (transactionsSum) {
-      res.send(transactionsSum);
+      res.send(transactionsSum.map(({_id , totalAmount}) => ({category : _id , totalAmount : totalAmount})));
     })
     .catch(function (error) {
       res.status(500).send({ message: "Internal Server Error" });

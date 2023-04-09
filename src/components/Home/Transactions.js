@@ -32,7 +32,7 @@ export default function Transactions({updateBalance , setMessageData}) {
       .delete(`${CONSTANTS.DELETE_TRANSACTION}/${id}`)
       .then((respond) => {
         updateBalance(-amount)
-        setMessageData({message: respond.data.message , severity: 'success'});
+        setMessageData({message: "Successfully deleted" , severity: 'success'});
         setDeletedTransactionId(id);
       })
       .catch(function (respond) {
